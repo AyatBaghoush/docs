@@ -1,0 +1,111 @@
+Here is the documentation for the SuperTest + Cucumber test framework in Markdown format:
+
+# Framework Overview
+
+SuperTest is a Node.js library that makes it easy to test HTTP requests across multiple environments. Your tests can make assertions and run requests against a variety of servers by using a simple and expressive interface so you can easily simulate a user's actions.
+
+Cucumber is a testing framework that supports Behavior-Driven Development (BDD) testing practices. With this framework, developers can write tests that document the behavior of the code and illustrate the desired outcomes. 
+
+This documentation will provide details on how to configure and run tests within this framework. 
+
+# Setup Instructions
+
+To set up the testing environment, ensure the following dependencies are installed:
+- Node.js
+- Cucumber
+- Chai
+
+Install the required dependencies for the project by running the following command in the terminal:
+```shell
+npm install --save-dev @cucumber/cucumber@10 @babel/core @babel/preset-env babel-jest supertest
+```
+
+## Setting Up Dependencies
+
+First, create a directory called `step-definitions` and within that folder, create three new files called `common-steps.js`, `create-user-steps.js`, and `fetch-users-steps.js`. 
+
+## Configure Step Definitions
+
+In the `step-definitions` folder, each `.js` file will contain steps for a different feature or scenario. 
+
+In `common-steps.js`, the `Given`, `When`, `Then`, and `setDefaultTimeout` clauses define steps that are reused across scenarios. The code sets the default timeout for all steps to 20 seconds. 
+
+In `create-user-steps.js`, the `When` step defines a function that returns a user object with a missing password field, and the `Then` step defines a function that checks if the returned error message contains a specific error string. 
+
+In `fetch-users-steps.js`, the `When` step defines a function that retrieves a list of users from the endpoint, and the `Then` step defines a function that checks if the response contains an empty user array. 
+
+## Writing Test Scenarios
+
+In this example, there is a `features` folder which contains feature files written in Gherkin syntax. Each feature file contains a set of scenarios that can be executed by the Cucumber testing framework. 
+
+Within this folder, create a file called `schema-validation.feature` and edit it with the following code:
+
+```gherkin
+# Schema Validation Feature
+
+Feature: Schema Validation
+
+    Scenario: Validating response against JSON schema
+        Given The "users" service is available
+        When I retrieve the list of users
+        Then Response should contain list of users
+        And Response should match JSON schema "users.schema.json"
+```
+
+This code defines a scenario for the feature file that checks that a list of users is returned and that the response matches the `users.schema.json` schema.
+
+## Configure and Run Tests
+
+Finally, run the following command in the terminal to configure and run the tests:
+
+```shell
+cucumber-js --require biomarkers --require @babel/core --require @babel/preset-env --require ./step-definitions --plugin json:./reports/cucumber-report.json features
+```
+
+This command runs the Cucumber testing framework, with the require modules, step definitions, and plugins. 
+
+# Test Scenarios Description
+
+## Schema Validation Feature
+
+This feature validates that the response from the API matches a JSON schema definition. It retrieves a list of users and checks that the response contains an array of users and that the schema of the response matches the defined schema. 
+
+# Utilities and Helpers
+
+## Logger
+
+The logger utility logs messages to the console, which can be useful for debugging. 
+
+## Test Data Manager
+
+The test data manager is a helper utility that provides test data for various test scenarios. In this framework, it is used to provide sample user data for the create user scenario. 
+
+## Schema Validator
+
+The schema validator is a helper utility used to validate the response data against a JSON schema. 
+
+# How to Run the Tests
+
+To run the tests, use the following command:
+
+```shell
+cucumber-js --require biomarkers --require @babel/core --require @babel/preset-env --require ./step-definitions --plugin json:./reports/cucumber-report.json features
+```
+
+This command runs the Cucumber testing framework, with the required modules, step definitions, and plugins. 
+
+Any notes or best practices will be documented here.
+
+# Other Notes
+
+Use biomarkers to declare the steps of your scenarios in a more readable and structured way.
+
+You can also use the plugin option in the cucumber-js CLI to generate a report of the tests, like this:
+
+```shell
+--plugin json:./reports/cucumber-report.json
+```
+
+This will generate a report in JSON format that can be used to analyze the test results. 
+
+You can also use the `--require` option to require other modules needed for your tests. This is how the `@babel/core`, `@babel/preset-env`, and babel-jest modules are required in the previous example. 
