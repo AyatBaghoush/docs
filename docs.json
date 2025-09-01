@@ -1,4 +1,5 @@
 {
+
   "$schema": "https://mintlify.com/docs.json",
   "name": "Evinova Framework",
   "theme": "mint",
@@ -6,6 +7,7 @@
     "primary": "#16A34A"
   },
   "navigation": {
-    "pages": ["framework-docs"]
+    "pages": ["framework-docs"] 
   }
+  
 }
